@@ -4,6 +4,9 @@ from werkzeug.utils import secure_filename
 from PIL import Image
 from docx import Document
 from fpdf import FPDF  # alt for docx to pdf (if docx2pdf fails)
+from reportlab.lib.pagesizes import letter
+from reportlab.pdfgen import canvas
+from docx import Document
 
 app = Flask(__name__)
 UPLOAD_FOLDER = 'uploads'
@@ -57,16 +60,30 @@ def convert():
         return f"Error during conversion: {str(e)}", 500
 
 def convert_docx_to_pdf(docx_path, pdf_path):
-    # Minimal workaround: extract text and write as PDF using fpdf
+# Open the DOCX document
     document = Document(docx_path)
-    pdf = FPDF()
-    pdf.add_page()
-    pdf.set_font("Arial", size=12)
+    
+    # Create a PDF canvas to write text
+    c = canvas.Canvas(pdf_path, pagesize=letter)
+    width, height = letter  # Standard letter size (8.5 x 11 inches)
+    c.setFont("Helvetica", 12)
 
+    # Starting position for the first paragraph
+    y_position = height - 40  # Start at the top of the page
+    
+    # Add each paragraph from the DOCX
     for para in document.paragraphs:
-        pdf.multi_cell(0, 10, para.text)
-
-    pdf.output(pdf_path)
+        if y_position < 40:  # If there's no space left on the page, create a new page
+            c.showPage()
+            c.setFont("Helvetica", 12)
+            y_position = height - 40
+        
+        # Write the paragraph text to the PDF
+        c.drawString(40, y_position, para.text)
+        y_position -= 14  # Move down for the next line
+    
+    # Save the generated PDF
+    c.save()
 
 if __name__ == "__main__":
     from waitress import serve
