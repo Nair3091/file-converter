@@ -5,3 +5,4 @@ pdf2docx==0.5.8
 Pillow==10.2.0
 waitress==3.0.2
 fpdf==1.7.2
+reportlab==4.4.0
