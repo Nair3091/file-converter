@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>File Converter</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #f4f6f8;
+            color: #333;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            max-width: 500px;
+            margin: 80px auto;
+            padding: 30px;
+            background: #fff;
+            border-radius: 10px;
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+
+        h1 {
+            margin-bottom: 10px;
+            color: #2c3e50;
+        }
+
+        .description {
+            font-size: 15px;
+            color: #555;
+            margin-bottom: 30px;
+        }
+
+        label {
+            display: block;
+            text-align: left;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+
+        input[type="file"],
+        select {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 20px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            box-sizing: border-box;
+        }
+
+        button {
+            background-color: #3498db;
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        button:hover {
+            background-color: #2980b9;
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 40px;
+            font-size: 14px;
+            color: #999;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>📁 File Converter</h1>
+        <p class="description">
+            Quickly convert files between PDF, DOCX, JPG, and PNG formats.<br>
+            Supported conversions: <strong>PDF → DOCX</strong>, <strong>DOCX → PDF</strong>, <strong>JPG ↔ PNG</strong>
+        </p>
+        <form action="/convert" method="POST" enctype="multipart/form-data">
+            <label for="file">Upload a file:</label>
+            <input type="file" name="file" id="file" required>
+
+            <label for="conversion_type">Conversion Type:</label>
+            <select name="conversion_type" id="conversion_type">
+                <option value="pdf-to-docx">PDF to DOCX</option>
+                <option value="docx-to-pdf">DOCX to PDF</option>
+                <option value="jpg-to-png">JPG to PNG</option>
+                <option value="png-to-jpg">PNG to JPG</option>
+            </select>
+
+            <button type="submit">Convert</button>
+        </form>
+    </div>
+
+    <footer>
+    </footer>
+</body>
+</html>
